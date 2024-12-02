@@ -24,13 +24,13 @@
             android:id="@+id/backButtonFavorite"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
+            android:background="@drawable/gradient_toolbar"
             app:contentInsetEnd="16dp"
             app:contentInsetStart="16dp"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/favorit"
-            app:titleTextColor="@android:color/black" />
+            app:titleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
