@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Yumify</string>
-    <string name="find_recipes_food_meals">Find Recipes Food Meals</string>
-    <string name="sub_heading_welcome">Various delicious food recipes that you can try and prepare and eat </string>
+    <string name="find_recipes_food_meals">Discover Food Recipes</string>
+    <string name="sub_heading_welcome">Explore a variety of tasty recipes you can cook, enjoy, and share</string>
     <string name="explore">Explore</string>
     <string name="sign_to_explore">Sign to Explore</string>
     <string name="welcome_friend">Welcome Flavor</string>
@@ -45,7 +45,6 @@
     <string name="ingredient_text">Ingredient_text</string>
     <string name="ingredient_name">Ingredient Name</string>
     <string name="recipe_image">Recipe Image</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -55,4 +54,16 @@
     <string name="favorites">Favorites</string>
     <string name="item_categories_image">Item Categories Image</string>
     <string name="hr">|</string>
+    <string name="mymenu">My Menu</string>
+    <string name="add_menu">Add Menu</string>
+    <string name="name">Name</string>
+    <string name="no_picture">No Picture</string>
+    <string name="cooking_time">Cooking Time</string>
+    <string name="add_image">Add image</string>
+    <string name="minutes">Minutes</string>
+    <string name="save">Save</string>
+    <string name="preparations">Preparations</string>
+    <string name="view">View</string>
+    <string name="edit">Edit</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
 </resources>
