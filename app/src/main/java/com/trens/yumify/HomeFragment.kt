@@ -1,59 +1,166 @@
 package com.trens.yumify
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.trens.yumify.databinding.FragmentHomeBinding
+import com.trens.yumify.di.ApiModule
+import com.trens.yumify.di.DbModule
+import com.trens.yumify.di.NetworkModule
+import com.trens.yumify.ui.adapter.CategoriesAdapter
+import com.trens.yumify.ui.adapter.FoodsAdapter
+import com.trens.yumify.data.repository.MainRepository
+import com.trens.yumify.utilities.CheckConnection
+import com.trens.yumify.utilities.DataStatus
+import com.trens.yumify.viewmodel.HomeViewModel
+import com.trens.yumify.viewmodel.HomeViewModelFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.trens.yumify.ui.view.DetailActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var categoriesAdapter: CategoriesAdapter
+    private lateinit var foodsAdapter: FoodsAdapter
+    private lateinit var checkConnection: CheckConnection
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val repository = MainRepository(
+            ApiModule.provideApiService(),
+            DbModule.provideFoodDao(DbModule.provideDatabase(requireContext()))
+        )
+
+        homeViewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(repository)
+        )[HomeViewModel::class.java]
+
+        auth = FirebaseAuth.getInstance()
+
+        setupRecyclerViews()
+        setupObservers()
+        setupSearchInput()
+        setupConnectionObserver()
+
+        homeViewModel.getCategoriesList()
+        homeViewModel.getFoodsList("b")
+
+        val user = auth.currentUser
+        user?.let {
+            binding.profileName.text = it.displayName
+        }
+
+        binding.profileLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), ProfileFragment::class.java))
+        }
+    }
+
+    private fun setupRecyclerViews() {
+        categoriesAdapter = CategoriesAdapter().apply {
+            setOnItemClickListener { category ->
+                homeViewModel.getFoodByCategory(category.strCategory ?: "")
+            }
+        }
+
+        binding.categoriesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoriesAdapter
+        }
+
+        foodsAdapter = FoodsAdapter().apply {
+            setOnItemClickListener { meal ->
+                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                    putExtra("MEAL_ID", meal.idMeal)
+                }
+                startActivity(intent)
+            }
+        }
+
+        binding.recyclerViewRecipes.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = foodsAdapter
+        }
+    }
+
+    private fun setupObservers() {
+        homeViewModel.categoriesList.observe(viewLifecycleOwner) { status ->
+            when (status.status) {
+                DataStatus.Status.LOADING -> binding.homeCategoryLoading.visibility = View.VISIBLE
+                DataStatus.Status.SUCCESS -> {
+                    binding.homeCategoryLoading.visibility = View.GONE
+                    status.data?.let { categoriesAdapter.setData(it.categories) }
+                }
+                DataStatus.Status.ERROR -> binding.homeCategoryLoading.visibility = View.GONE
+            }
+        }
+
+        homeViewModel.foodList.observe(viewLifecycleOwner) { status ->
+            when (status.status) {
+                DataStatus.Status.LOADING -> binding.homeFoodsLoading.visibility = View.VISIBLE
+                DataStatus.Status.SUCCESS -> {
+                    binding.homeFoodsLoading.visibility = View.GONE
+                    status.data?.let { foodsAdapter.setData(it.meals ?: emptyList()) }
+                }
+                DataStatus.Status.ERROR -> binding.homeFoodsLoading.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setupSearchInput() {
+        binding.SearchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                s?.toString()?.let {
+                    if (it.isNotEmpty()) {
+                        homeViewModel.getFoodBySearch(it)
+                    } else {
+                        homeViewModel.getFoodsList("b")
+                    }
                 }
             }
+        })
+    }
+
+    private fun setupConnectionObserver() {
+        checkConnection = CheckConnection(NetworkModule.provideConnectivityManager(requireContext()))
+        checkConnection.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                binding.viewOffline.visibility = View.GONE
+                binding.homeDissconect.visibility = View.GONE
+                binding.viewContent.visibility = View.VISIBLE
+            } else {
+                binding.viewOffline.visibility = View.VISIBLE
+                binding.homeDissconect.visibility = View.VISIBLE
+                binding.viewContent.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
