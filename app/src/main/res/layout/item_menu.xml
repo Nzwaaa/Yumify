@@ -1,133 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/rounded_main"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="8dp"
+    android:radius="8dp"
+    android:elevation="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.3">
+        <!-- Gambar Menu -->
+        <ImageView
+            android:id="@+id/menuImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Menu Image"
+            android:src="@drawable/potato" />
 
-            <LinearLayout
-                android:id="@+id/ll_recipeNoPicture"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/dashed_border"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/tv_no_picture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no_picture"
-                    android:textColor="#888888"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/iv_recipe"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <!-- Overlay Nama Menu -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgBtn_recipeFavorite"
-            app:layout_constraintStart_toEndOf="@id/cl_image"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80000000"
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="bottom">
 
             <TextView
-                android:id="@+id/tv_recipeName"
-                android:layout_width="match_parent"
+                android:id="@+id/menuName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/name"
+                android:layout_weight="1"
+                android:text="Menu Name"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textColor="#FFFFFF" />
 
+            <!-- Tombol Edit -->
+            <ImageButton
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="Edit"
+                android:padding="4dp"
+                android:src="@drawable/ic_edit"
+                android:tint="#FFFFFF"
+                tools:ignore="TouchTargetSizeCheck,UseAppTint" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/viewbtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:minWidth="0dp"
-                    android:minHeight="48dp"
-                    android:text="@string/view"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/editbtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-
-                    android:minHeight="48dp"
-                    android:text="@string/edit"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
+            <!-- Tombol Hapus -->
+            <ImageButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="Delete"
+                android:padding="4dp"
+                android:src="@drawable/ic_delete"
+                android:tint="@color/white"
+                tools:ignore="TouchTargetSizeCheck,UseAppTint" />
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imgBtn_recipeFavorite"
-            android:layout_width="wrap_content"
+        <!-- Deskripsi Menu -->
+        <TextView
+            android:id="@+id/menuDescription"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="icon"
-            android:minHeight="48dp"
-            android:src="@drawable/ic_favorite_outlined"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/imgBtn_preparationDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="trashicon"
-            android:minHeight="48dp"
-            android:src="@drawable/ic_trash"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imgBtn_recipeFavorite" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+            android:text="Description"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:background="#F7FAF8" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
