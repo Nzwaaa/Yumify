@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/myMenuFragment">
+
+    <fragment
+        android:id="@+id/myMenuFragment"
+        android:name="com.trens.yumify.MyMenuFragment"
+        android:label="My Menu"
+        tools:layout="@layout/fragment_my_menu">
+        <action
+            android:id="@+id/action_myMenuFragment_to_fragment_add_edit_menu"
+            app:destination="@id/fragment_add_edit_menu" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_add_edit_menu"
+        android:name="com.trens.yumify.AddEditMenuFragment"
+        android:label="Add/Edit Menu"
+        tools:layout="@layout/fragment_add_edit_menu" />
+</navigation>
