@@ -7,7 +7,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.trens.yumify.FavoriteFragment
 import com.trens.yumify.HomeFragment
 import com.trens.yumify.MyMenuFragment
 import com.trens.yumify.ProfileFragment
@@ -37,10 +36,6 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(MyMenuFragment())
                     true
                 }
-                R.id.activity3 -> {
-                    loadFragment(FavoriteFragment())
-                    true
-                }
                 R.id.profilpage -> {
                     loadFragment(ProfileFragment())
                     true
@@ -49,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Membuka fragment default saat pertama kali
         if (savedInstanceState == null) {
             bottomNavigationView.selectedItemId = R.id.homepage
         }

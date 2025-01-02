@@ -1,178 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="#F7FAF8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7FAF8"
     tools:context=".ui.view.DetailActivity">
 
+    <!-- AppBarLayout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/backButtonDetail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:baselineAligned="false"
-            app:contentInsetEnd="16dp"
-            app:contentInsetStart="16dp"
+            android:background="@color/background"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/detail_recipe"
-            app:titleTextColor="@android:color/black" />
-
+            app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- ScrollView untuk konten -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/NestedScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/AppBar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="44dp">
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <!-- Gambar -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/imageCard"
                 android:layout_width="0dp"
-                android:layout_height="400dp"
-                android:background="#F6E1CB"
-                android:contentDescription="@string/recipe_image"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ImageContrastCheck" />
+                app:layout_constraintDimensionRatio="20:14">
 
-            <LinearLayout
-                android:id="@+id/titleCategoryContainer"
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/recipe_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cooking" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+            <!-- Nama Resep -->
+            <TextView
+                android:id="@+id/editTextName"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="25dp"
-                android:background="@drawable/container_background"
-                android:elevation="2dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Recipe Name"
+                android:textColor="#333333"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/imageCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Label Bahan-Bahan -->
+            <TextView
+                android:id="@+id/ingredientsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Ingredients"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/editTextName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Bahan-Bahan -->
+            <TextView
+                android:id="@+id/ingredientsText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:padding="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
+                android:text="- Ingredient 1\n- Ingredient 2\n- Ingredient 3"
+                android:textColor="#444444"
+                android:textSize="14sp"
+                android:background="@drawable/container_background"
+                app:layout_constraintTop_toBottomOf="@id/ingredientsLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/editTextName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:gravity="center"
-                    android:hint="@string/recipe_name"
-                    android:padding="4dp"
-                    android:textColorHint="#5D4037"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+            <!-- Label Instruksi -->
+            <TextView
+                android:id="@+id/instructionLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Steps"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:layout_marginStart="12dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/ingredientsText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/hrLine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:gravity="center"
-                    android:hint="@string/hr"
-                    android:padding="4dp"
-                    android:textColorHint="#5D4037"
-                    android:textSize="12sp" />
-
-
-            </LinearLayout>
-
-
-
+            <!-- Instruksi -->
             <TextView
                 android:id="@+id/editTextSteps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="34dp"
-                android:text="@string/instruction_meals"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintWidth_max="360dp" />
-
-            <TextView
-                android:id="@+id/Ingredients"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/ingredients"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipeInstructions" />
-
-            <TextView
-                android:id="@+id/recipeInstructions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:autofillHints="no"
-                android:gravity="center"
-                android:hint="@string/instruction_text"
-                android:inputType="none"
-                android:padding="16dp"
-                android:layout_marginHorizontal="18dp"
-                android:textColorHint="@color/black"
-                android:textSize="18sp"
-                android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextSteps" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/editTextIngredients"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="18dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="8dp"
+                android:padding="12dp"
+                android:justificationMode="inter_character"
+                android:text="1. Step 1\n2. Step 2\n3. Step 3"
+                android:textColor="#555555"
+                android:textSize="16sp"
+                android:background="@drawable/container_background"
+                app:layout_constraintTop_toBottomOf="@id/instructionLabel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Ingredients"
-                tools:listitem="@layout/item_ingredient" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

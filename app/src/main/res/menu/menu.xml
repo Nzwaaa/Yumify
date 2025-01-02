@@ -12,11 +12,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_mymenu"
         android:title="My Menu"/>
-    <item
-        android:id="@+id/activity3"
-        android:enabled="true"
-        android:icon="@drawable/baseline_favorite_24"
-        android:title="Favorite"/>
+
     <item
         android:id="@+id/profilpage"
         android:enabled="true"

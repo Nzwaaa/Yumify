@@ -1,42 +1,47 @@
 package com.trens.yumify.ui.view
 
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.trens.yumify.R
+import com.trens.yumify.databinding.ActivityDetailMenuBinding
 
 class DetailMenuActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDetailMenuBinding
+
+    companion object {
+        const val EXTRA_MENU_NAME = "menuName"
+        const val EXTRA_MENU_INGREDIENTS = "menuIngredients"
+        const val EXTRA_MENU_STEPS = "menuSteps"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_menu)
 
-        // Ambil referensi elemen dari layout
-        val backButton = findViewById<ImageView>(R.id.backButtonDetail)
-        val imageView = findViewById<ImageView>(R.id.imageView)
-        val recipeName = findViewById<TextView>(R.id.editTextName)
-        val recipeInstructions = findViewById<TextView>(R.id.recipeInstructions)
-        val ingredientsList = findViewById<RecyclerView>(R.id.editTextIngredients)
+        binding = ActivityDetailMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Ambil data dari Intent
-        val menuName = intent.getStringExtra("menuName") ?: "Tidak ada nama"
-        val menuIngredients = intent.getStringExtra("menuIngredients") ?: "Tidak ada bahan"
-        val menuSteps = intent.getStringExtra("menuSteps") ?: "Tidak ada langkah"
-        val menuImageResId = intent.getIntExtra("menuImage", R.drawable.potato) // default placeholder
+        val menuName = intent?.getStringExtra(EXTRA_MENU_NAME) ?: "Tidak ada nama"
+        val menuIngredients = intent?.getStringExtra(EXTRA_MENU_INGREDIENTS) ?: ""
+        val menuSteps = intent?.getStringExtra(EXTRA_MENU_STEPS) ?: "Tidak ada langkah"
 
-        // Tampilkan data pada elemen layout
-        recipeName.text = menuName
-        recipeInstructions.text = menuSteps
-        imageView.setImageResource(menuImageResId)
+        val formattedIngredients = menuIngredients.split(",")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .map { "- $it" }
+            .joinToString("\n")
 
-        // TODO: Implementasi untuk ingredients list
-        // Anda bisa gunakan Adapter RecyclerView untuk menampilkan daftar bahan-bahan di RecyclerView `editTextIngredients`.
+        binding.editTextName.text = menuName
+        binding.ingredientsText.text = formattedIngredients
+        binding.editTextSteps.text = menuSteps
 
-        // Tombol kembali
-        backButton.setOnClickListener {
-            finish() // Menutup activity ini dan kembali ke yang sebelumnya
+        Glide.with(this)
+            .load(R.drawable.cooking)
+            .into(binding.imageView)
+
+        binding.backButtonDetail.setOnClickListener {
+            finish()
         }
-    }
+        }
 }

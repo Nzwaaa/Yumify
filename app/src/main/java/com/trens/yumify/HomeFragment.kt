@@ -72,9 +72,7 @@ class HomeFragment : Fragment() {
             binding.profileName.text = it.displayName
         }
 
-        binding.profileLayout.setOnClickListener {
-            startActivity(Intent(requireContext(), ProfileFragment::class.java))
-        }
+
     }
 
     private fun setupRecyclerViews() {

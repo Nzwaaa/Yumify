@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "92432153071",
-    "project_id": "Yumify",
-    "storage_bucket": "Yumify.appspot.com"
+    "project_number": "918577035139",
+    "project_id": "yumyfyapp",
+    "storage_bucket": "yumyfyapp.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92432153071:android:2c8bdbb0ecb246023bde1a",
+        "mobilesdk_app_id": "1:918577035139:android:54cbce52db0939c74aa8b6",
         "android_client_info": {
           "package_name": "com.trens.yumify"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDeUMM4IVE37g4cngvQ9WxdoiB8uTM6G_A"
+          "current_key": "AIzaSyDRT6KChMZNGBc2qsJVCUJuMtdxxB-DAFE"
         }
       ],
       "services": {

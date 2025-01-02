@@ -1,6 +1,5 @@
 package com.trens.yumify.ui.view
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -16,7 +15,7 @@ import com.trens.yumify.viewmodel.MenuViewModel
 
 class AddMenuActivity : AppCompatActivity() {
     private lateinit var menuViewModel: MenuViewModel
-    private var imageUri: Uri? = null // Menyimpan URI gambar yang diupload
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +23,20 @@ class AddMenuActivity : AppCompatActivity() {
 
         menuViewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
 
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.backButtonAddMenu)
         val editTextName = findViewById<EditText>(R.id.editTextName)
         val editTextIngredients = findViewById<EditText>(R.id.editTextIngredients)
         val editTextSteps = findViewById<EditText>(R.id.editTextSteps)
         val imageView = findViewById<ImageView>(R.id.imageView)
         val buttonSave = findViewById<Button>(R.id.buttonSave)
 
-        // Intent untuk memilih gambar dari galeri
+        setSupportActionBar(toolbar)
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+
         val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
                 imageUri = uri
@@ -38,7 +44,6 @@ class AddMenuActivity : AppCompatActivity() {
             }
         }
 
-        // Klik pada gambar untuk membuka galeri
         imageView.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
@@ -48,12 +53,12 @@ class AddMenuActivity : AppCompatActivity() {
             val ingredients = editTextIngredients.text.toString()
             val steps = editTextSteps.text.toString()
 
-            // Validasi kolom kosong
             when {
-                name.isEmpty() -> showToast("Nama menu tidak boleh kosong")
-                ingredients.isEmpty() -> showToast("Bahan-bahan tidak boleh kosong")
-                steps.isEmpty() -> showToast("Langkah-langkah tidak boleh kosong")
-                imageUri == null -> showToast("Silakan pilih gambar untuk menu")
+                name.isEmpty() -> showToast("Menu name cannot be empty")
+                ingredients.isEmpty() -> showToast("Ingredients cannot be empty")
+                steps.isEmpty() -> showToast("Steps cannot be empty")
+                imageUri == null -> showToast("Please select an image for the menu")
+
                 else -> {
                     val menu = MenuEntity(
                         name = name,
@@ -62,8 +67,10 @@ class AddMenuActivity : AppCompatActivity() {
                         ingredients = ingredients
                     )
                     menuViewModel.insertMenu(menu)
-                    Toast.makeText(this, "Success add menu", Toast.LENGTH_SHORT).show()
-                    finish() // Menutup activity
+
+                    Toast.makeText(this, "Menu added successfully", Toast.LENGTH_SHORT).show()
+
+                    finish()
                 }
             }
         }

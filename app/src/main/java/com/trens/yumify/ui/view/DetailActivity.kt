@@ -47,12 +47,6 @@ class DetailActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.FavoriteButton.setOnClickListener {
-            val meal = detailViewModel.foodDetail.value?.data?.meals?.firstOrNull()
-            meal?.let {
-                toggleFavorite(it)
-            }
-        }
     }
 
     private fun setupRecyclerView() {
@@ -77,13 +71,6 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        detailViewModel.isFavorite.observe(this) { isFavorite ->
-            if (isFavorite) {
-                binding.FavoriteButton.setImageResource(R.drawable.ic_favorite)
-            } else {
-                binding.FavoriteButton.setImageResource(R.drawable.ic_favorite)
-            }
-        }
     }
 
     private fun bindDetails(meal: MealsListResponse.Meal) {

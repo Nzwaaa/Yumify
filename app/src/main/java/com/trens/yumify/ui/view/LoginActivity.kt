@@ -10,8 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.trens.yumify.R
 import com.trens.yumify.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.trens.yumify.firebase.FirebaseHelper
 
 class LoginActivity : AppCompatActivity() {
@@ -26,10 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Cek apakah pengguna sudah login
         if (auth.currentUser != null) {
             navigateToMainActivity()
-            return // Keluar dari `onCreate` jika sudah login
+            return
         }
 
         val rootView = findViewById<View>(R.id.main)
@@ -48,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.PasswordInputET.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Tolong isi semua field", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
                 loginUser(email, password)
             }
@@ -71,6 +68,6 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Menghapus aktivitas ini dari back stack
+        finish()
     }
 }

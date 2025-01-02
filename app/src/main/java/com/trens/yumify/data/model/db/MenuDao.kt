@@ -5,6 +5,7 @@ import androidx.room.*
 
 @Dao
 interface MenuDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMenu(menu: MenuEntity)
 
@@ -14,6 +15,6 @@ interface MenuDao {
     @Delete
     suspend fun deleteMenu(menu: MenuEntity)
 
-    @Query("SELECT * FROM menu_table ORDER BY id DESC")
+    @Query("SELECT * FROM menu_table")
     fun getAllMenus(): LiveData<List<MenuEntity>>
 }

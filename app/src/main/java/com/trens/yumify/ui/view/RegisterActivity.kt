@@ -43,9 +43,9 @@ class RegisterActivity : AppCompatActivity() {
             val confirmPassword = binding.ConfirmPasswordInputET.text.toString().trim()
 
             if (email.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Tolong isi semua fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else if (password != confirmPassword) {
-                Toast.makeText(this, "Kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             } else {
                 registerUser(email, password, username)
             }
@@ -55,7 +55,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerUser(email: String, password: String, username: String) {
         FirebaseHelper.signUp(email, password, username) { success, errorMessage ->
             if (success) {
-                Toast.makeText(this, "Pendaftaran berhasil!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {

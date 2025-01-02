@@ -15,7 +15,7 @@
         app:elevation="4dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/backButtonAddMenu"
+            android:id="@+id/toolbarEditMenu"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/gradient_toolbar"
@@ -132,8 +132,32 @@
                         android:contentDescription="Add Image"
                         android:background="@drawable/baseline_image_search_24"
                         android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="12dp"
+                        android:text="Change the picture"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:background="#80000000"
+                        android:padding="6dp"
+                        android:gravity="center"
+                        android:textStyle="bold" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/noteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="* Ignore if you don't want to change the image"
+                android:textColor="#FF0000"
+                android:textSize="14sp"
+                android:textStyle="italic" />
 
             <!-- Save Button -->
             <Button
@@ -146,7 +170,7 @@
                 android:elevation="6dp"
                 android:padding="12dp"
                 android:radius="8dp"
-                android:text="Simpan"
+                android:text="Save"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:ignore="TextContrastCheck" />

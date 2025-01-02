@@ -8,7 +8,8 @@ data class MenuEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
-    val imageUri: String, // Untuk menyimpan URI gambar
-    val steps: String, // Langkah-langkah memasak
-    val ingredients: String // Daftar bahan
+    val imageUri: String,
+    val steps: String,
+    val ingredients: String
 )
+

@@ -146,7 +146,7 @@
                 android:elevation="6dp"
                 android:padding="12dp"
                 android:radius="8dp"
-                android:text="Simpan"
+                android:text="Save"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:ignore="TextContrastCheck" />
